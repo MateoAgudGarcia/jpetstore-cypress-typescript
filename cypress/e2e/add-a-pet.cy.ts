@@ -1,7 +1,7 @@
 import { CardType, HomePage, LoginPage, PetCategories } from '../page-objects';
 import { paymentInformation, userInformation } from '../utils/utilities';
 
-describe('Add a pet', () => {
+describe('Buy pets', () => {
   const homePage = new HomePage();
   const loginPage = new LoginPage();
   let username: string;
