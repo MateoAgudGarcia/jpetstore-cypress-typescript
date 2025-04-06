@@ -1,5 +1,4 @@
-import { BasePage } from './base.page';
-import { PaymentPage } from './payment.page';
+import { BasePage, PaymentPage } from '.';
 
 export class CatalogPage extends BasePage {
   private get catalogContent() {

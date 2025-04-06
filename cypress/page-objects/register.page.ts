@@ -1,5 +1,4 @@
-import { BasePage, PetCategories } from './base.page';
-import { LoginCredentials } from './login.page';
+import { BasePage, LoginCredentials, PetCategories } from '.';
 
 enum LanguagePreference {
   English = 'english',

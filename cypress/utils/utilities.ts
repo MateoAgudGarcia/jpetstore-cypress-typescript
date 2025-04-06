@@ -1,8 +1,6 @@
-import { faker } from '@faker-js/faker';
+import { CardType, PetCategories, UserRegistrationData } from '../page-objects';
 import userData from '../fixtures/user-data.json';
-import { UserRegistrationData } from '../page-objects/register.page';
-import { PetCategories } from '../page-objects/base.page';
-import { CardType } from '../page-objects/payment.page';
+import { faker } from '@faker-js/faker';
 
 export function userInformation(category: PetCategories): UserRegistrationData {
   const firstName = faker.person.firstName();

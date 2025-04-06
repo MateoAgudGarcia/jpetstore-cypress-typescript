@@ -1,5 +1,4 @@
-import { BasePage } from './base.page';
-import { RegisterPage } from './register.page';
+import { BasePage, RegisterPage } from '.';
 
 export interface LoginCredentials {
   username: string;

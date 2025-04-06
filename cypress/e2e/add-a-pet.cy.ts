@@ -1,7 +1,4 @@
-import { PetCategories } from '../page-objects/base.page';
-import { HomePage } from '../page-objects/home.page';
-import { LoginPage } from '../page-objects/login.page';
-import { CardType } from '../page-objects/payment.page';
+import { CardType, HomePage, LoginPage, PetCategories } from '../page-objects';
 import { paymentInformation, userInformation } from '../utils/utilities';
 
 describe('Add a pet', () => {

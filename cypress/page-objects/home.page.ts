@@ -1,5 +1,4 @@
-import { BasePage, PetCategories } from './base.page';
-import { CatalogPage } from './catalog.page';
+import { BasePage, CatalogPage, PetCategories } from '.';
 
 export class HomePage extends BasePage {
   private get sidebarElement() {
