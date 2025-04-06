@@ -25,7 +25,7 @@ describe('Buy pets', () => {
     homePage.signOut();
   });
 
-  it('should add a pet to the cart', () => {
+  it('should add a bird to the cart', () => {
     const catalogPage = homePage.goToCategory(PetCategories.BIRDS);
     catalogPage.chooseProductByIndex(0).addToCartByIndex(0);
   });
