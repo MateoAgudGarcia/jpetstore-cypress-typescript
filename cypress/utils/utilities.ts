@@ -4,7 +4,7 @@ import { UserRegistrationData } from '../page-objects/register.page';
 import { PetCategories } from '../page-objects/base.page';
 import { CardType } from '../page-objects/payment.page';
 
-export function userInformation(category:PetCategories): UserRegistrationData {
+export function userInformation(category: PetCategories): UserRegistrationData {
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
   return {

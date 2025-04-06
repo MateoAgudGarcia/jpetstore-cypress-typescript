@@ -26,7 +26,7 @@ describe('Add a pet', () => {
 
   afterEach(() => {
     homePage.signOut();
-  })
+  });
 
   it('should add a pet to the cart', () => {
     const catalogPage = homePage.goToCategory(PetCategories.BIRDS);
