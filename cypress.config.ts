@@ -1,13 +1,12 @@
 import { defineConfig } from 'cypress';
 
 export default defineConfig({
-  reporter: 'mochawesome',
+  reporter: 'cypress-mochawesome-reporter',
   reporterOptions: {
     reportDir: 'cypress/results',
-    reportFilename: 'index',
-    overwrite: true,
-    html: true,
-    json: false,
+    charts: true,
+    reportPageTitle: 'index',
+    embeddedScreenshots: true,
   },
   retries: {
     runMode: 3,
@@ -16,6 +15,10 @@ export default defineConfig({
   e2e: {
     baseUrl: 'https://petstore.octoperf.com',
     specPattern: 'cypress/e2e/**/*.cy.ts',
-    screenshotsFolder: 'mochawesome-report/assets',
+    screenshotsFolder: 'cypress/results/screenshots',
+    setupNodeEvents(on) {
+      // eslint-disable-next-line @typescript-eslint/no-require-imports
+      require('cypress-mochawesome-reporter/plugin')(on);
+    },
   },
 });
