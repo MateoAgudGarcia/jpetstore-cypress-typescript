@@ -23,6 +23,10 @@ export class BasePage {
     return this.menuElement.find('a[href*="signonForm"]');
   }
 
+  private get signOffButton() {
+    return cy.get('[href*="action?signoff"]');
+  }
+
   private get cartLink() {
     return this.menuElement.find('a[href*="viewCart"]');
   }
@@ -50,6 +54,16 @@ export class BasePage {
    */
   public goToSignIn(): this {
     this.signInLink.should('be.visible').click();
+    return this;
+  }
+
+  /**
+   * Signs off the current user by clicking the sign off button
+   * @returns {this} The current page instance for method chaining
+   */
+  public signOut(): this {
+    this.signOffButton.should('be.visible').click();
+    this.signInLink.should('be.visible');
     return this;
   }
 

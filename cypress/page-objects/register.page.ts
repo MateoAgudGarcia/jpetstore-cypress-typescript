@@ -1,11 +1,12 @@
 import { BasePage, PetCategories } from './base.page';
+import { LoginCredentials } from './login.page';
 
 enum LanguagePreference {
   English = 'english',
   Japanese = 'japanese',
 }
 
-interface UserRegistrationData {
+export interface UserRegistrationData {
   username: string;
   password: string;
   repeatedPassword: string;
@@ -27,75 +28,75 @@ interface UserRegistrationData {
 
 export class RegisterPage extends BasePage {
   private get usernameInput() {
-    return cy.get('input[name="username"]');
+    return this.content.get('input[name="username"]');
   }
 
   private get passwordInput() {
-    return cy.get('input[name="password"]');
+    return this.content.get('input[name="password"]');
   }
 
   private get repeatedPasswordInput() {
-    return cy.get('input[name="repeatedPassword"]');
+    return this.content.get('input[name="repeatedPassword"]');
   }
 
   private get firstNameInput() {
-    return cy.get('input[name="account.firstName"]');
+    return this.content.get('input[name="account.firstName"]');
   }
 
   private get lastNameInput() {
-    return cy.get('input[name="account.lastName"]');
+    return this.content.get('input[name="account.lastName"]');
   }
 
   private get emailInput() {
-    return cy.get('input[name="account.email"]');
+    return this.content.get('input[name="account.email"]');
   }
 
   private get phoneInput() {
-    return cy.get('input[name="account.phone"]');
+    return this.content.get('input[name="account.phone"]');
   }
 
   private get address1Input() {
-    return cy.get('input[name="account.address1"]');
+    return this.content.get('input[name="account.address1"]');
   }
 
   private get address2Input() {
-    return cy.get('input[name="account.address2"]');
+    return this.content.get('input[name="account.address2"]');
   }
 
   private get cityInput() {
-    return cy.get('input[name="account.city"]');
+    return this.content.get('input[name="account.city"]');
   }
 
   private get stateInput() {
-    return cy.get('input[name="account.state"]');
+    return this.content.get('input[name="account.state"]');
   }
 
   private get zipInput() {
-    return cy.get('input[name="account.zip"]');
+    return this.content.get('input[name="account.zip"]');
   }
 
   private get countryInput() {
-    return cy.get('input[name="account.country"]');
+    return this.content.get('input[name="account.country"]');
   }
 
   private get languagePreferenceSelect() {
-    return cy.get('select[name="account.languagePreference"]');
+    return this.content.get('select[name="account.languagePreference"]');
   }
 
   private get favouriteCategorySelect() {
-    return cy.get('select[name="account.favouriteCategoryId"]');
+    return this.content.get('select[name="account.favouriteCategoryId"]');
   }
 
   private get myListCheckbox() {
-    return cy.get('input[name="account.listOption"]');
+    return this.content.get('input[name="account.listOption"]');
   }
 
   private get myBannerCheckbox() {
-    return cy.get('input[name="account.bannerOption"]');
+    return this.content.get('input[name="account.bannerOption"]');
   }
 
   private get saveButton() {
-    return cy.get('input[name="newAccount"]');
+    return this.content.get('input[name="newAccount"]');
   }
 
   /**
@@ -104,12 +105,6 @@ export class RegisterPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public fillRegistrationForm(userData: UserRegistrationData): this {
-    Cypress.log({
-      name: 'Fill Registration Form',
-      message: `Filling registration form for user: ${userData.username}`,
-      consoleProps: () => ({ userData }),
-    });
-
     this.usernameInput.type(userData.username);
     this.passwordInput.type(userData.password);
     this.repeatedPasswordInput.type(userData.password);
@@ -146,11 +141,6 @@ export class RegisterPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public submitRegistration(): this {
-    Cypress.log({
-      name: 'Submit Registration',
-      message: 'Submitting registration form',
-    });
-
     this.saveButton.click();
     return this;
   }
@@ -158,9 +148,10 @@ export class RegisterPage extends BasePage {
   /**
    * Complete registration process with provided user data
    * @param userData - The user registration data
-   * @returns {this} - Returns the current page instance
+   * @returns {username,password}
    */
-  public register(userData: UserRegistrationData): this {
-    return this.fillRegistrationForm(userData).submitRegistration();
+  public register(userData: UserRegistrationData): LoginCredentials {
+    this.fillRegistrationForm(userData).submitRegistration();
+    return { username: userData.username, password: userData.password };
   }
 }

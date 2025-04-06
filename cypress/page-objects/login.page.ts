@@ -1,26 +1,26 @@
 import { BasePage } from './base.page';
 import { RegisterPage } from './register.page';
 
-interface LoginCredentials {
+export interface LoginCredentials {
   username: string;
   password: string;
 }
 
 export class LoginPage extends BasePage {
   private get usernameInput() {
-    return cy.get('input[name="username"]');
+    return this.content.get('input[name="username"]');
   }
 
   private get passwordInput() {
-    return cy.get('input[name="password"]');
+    return this.content.get('input[name="password"]');
   }
 
   private get loginButton() {
-    return cy.get('input[name="signon"]');
+    return this.content.get('input[name="signon"]');
   }
 
   private get registerButton() {
-    return cy.get('a[href*="newAccountForm"]');
+    return this.content.get('a[href*="newAccountForm"]');
   }
 
   /**
@@ -29,14 +29,8 @@ export class LoginPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public fillLoginForm(credentials: LoginCredentials): this {
-    Cypress.log({
-      name: 'Fill Login Form',
-      message: `Filling login form for user: ${credentials.username}`,
-      consoleProps: () => ({ credentials }),
-    });
-
-    this.usernameInput.type(credentials.username);
-    this.passwordInput.type(credentials.password);
+    this.usernameInput.clear().type(credentials.username);
+    this.passwordInput.clear().type(credentials.password);
     return this;
   }
 
@@ -45,11 +39,6 @@ export class LoginPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public submitLogin(): this {
-    Cypress.log({
-      name: 'Submit Login',
-      message: 'Clicking login button',
-    });
-
     this.loginButton.click();
     return this;
   }
@@ -68,11 +57,6 @@ export class LoginPage extends BasePage {
    * @returns {RegisterPage} - Returns the RegisterPage instance
    */
   public goToRegister(): RegisterPage {
-    Cypress.log({
-      name: 'Go to Register',
-      message: 'Navigating to registration page',
-    });
-
     this.registerButton.click();
     return new RegisterPage();
   }

@@ -17,7 +17,7 @@ export class HomePage extends BasePage {
   }
 
   private get searchInput() {
-    return this.searchContent.find('input[name="searchProducts"]');
+    return this.searchContent.find('input[name="keyword"]');
   }
 
   private get searchButton() {

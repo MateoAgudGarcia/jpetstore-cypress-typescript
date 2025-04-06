@@ -1,6 +1,10 @@
 import { BasePage } from './base.page';
 
-export type CardType = 'Visa' | 'MasterCard' | 'American Express';
+export enum CardType {
+  Visa = 'Visa',
+  MasterCard = 'MasterCard',
+  AmericanExpress = 'American Express',
+}
 
 interface PaymentDetails {
   cardType: CardType;
@@ -10,15 +14,27 @@ interface PaymentDetails {
 
 export class PaymentPage extends BasePage {
   private get cardTypeSelect() {
-    return cy.get('select[name="order.cardType"]');
+    return this.content.get('select[name="order.cardType"]');
   }
 
   private get cardNumberInput() {
-    return cy.get('input[name="order.creditCard"]');
+    return this.content.get('input[name="order.creditCard"]');
   }
 
   private get expiryDateInput() {
-    return cy.get('input[name="order.expiryDate"]');
+    return this.content.get('input[name="order.expiryDate"]');
+  }
+
+  private get newOrderButton() {
+    return this.content.get('input[name="newOrder"]');
+  }
+
+  private get confirmButton() {
+    return this.content.get('a.Button').contains('Confirm');
+  }
+
+  private get confirmationMessage() {
+    return this.content.get('ul.messages > li');
   }
 
   /**
@@ -27,16 +43,11 @@ export class PaymentPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public fillPaymentForm(paymentDetails: PaymentDetails): this {
-    Cypress.log({
-      name: 'Fill Payment Form',
-      message: `Filling payment form with card type: ${paymentDetails.cardType}`,
-      consoleProps: () => ({ paymentDetails }),
-    });
-
     this.cardTypeSelect.select(paymentDetails.cardType);
-    this.cardNumberInput.type(paymentDetails.cardNumber);
-    this.expiryDateInput.type(paymentDetails.expiryDate);
+    this.cardNumberInput.clear().type(paymentDetails.cardNumber);
+    this.expiryDateInput.clear().type(paymentDetails.expiryDate);
 
+    this.newOrderButton.click();
     return this;
   }
 
@@ -46,11 +57,6 @@ export class PaymentPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public selectCardType(cardType: CardType): this {
-    Cypress.log({
-      name: 'Select Card Type',
-      message: `Selecting card type: ${cardType}`,
-    });
-
     this.cardTypeSelect.select(cardType);
     return this;
   }
@@ -61,12 +67,6 @@ export class PaymentPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public enterCardNumber(cardNumber: string): this {
-    Cypress.log({
-      name: 'Enter Card Number',
-      message: 'Entering card number',
-      consoleProps: () => ({ cardNumber }),
-    });
-
     this.cardNumberInput.type(cardNumber);
     return this;
   }
@@ -77,12 +77,20 @@ export class PaymentPage extends BasePage {
    * @returns {this} - Returns the current page instance
    */
   public enterExpiryDate(expiryDate: string): this {
-    Cypress.log({
-      name: 'Enter Expiry Date',
-      message: `Entering expiry date: ${expiryDate}`,
-    });
-
     this.expiryDateInput.type(expiryDate);
+    return this;
+  }
+
+  /**
+   * Confirms the order by clicking the confirm button and verifies the confirmation message
+   * @returns {this} - Returns the current page instance
+   */
+  public confirmOrder(): this {
+    this.confirmButton.click();
+    this.confirmationMessage.should(
+      'have.text',
+      'Thank you, your order has been submitted.',
+    );
     return this;
   }
 }
