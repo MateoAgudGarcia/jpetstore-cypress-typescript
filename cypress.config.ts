@@ -9,9 +9,13 @@ export default defineConfig({
     html: true,
     json: false,
   },
-  retries: 3,
+  retries: {
+    runMode: 3,
+    openMode: 0,
+  },
   e2e: {
     baseUrl: 'https://petstore.octoperf.com',
     specPattern: 'cypress/e2e/**/*.cy.ts',
+    screenshotsFolder: 'mochawesome-report/assets',
   },
 });
